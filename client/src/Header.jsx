@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
 const Header = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <div>
       {/* Header */}
@@ -85,6 +89,7 @@ const Header = () => {
               />
             </svg>
           </div>
+          {!!user && <div>{user.name}</div>}
         </Link>
       </header>
     </div>
