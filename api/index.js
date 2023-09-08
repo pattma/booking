@@ -7,6 +7,7 @@ const User = require("./models/User.js");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const app = express();
+const port = 8080
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "346rkgmvcbzhgcitudfhxgs3e5779";
@@ -84,4 +85,5 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
-app.listen(4000);
+// app.listen(4000);
+app.listen(port, () => console.log(`Server has started on port: ${port}`))
