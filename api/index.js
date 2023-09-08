@@ -50,7 +50,7 @@ app.post("/login", async (req, res) => {
     const passOk = bcrypt.compareSync(password, userDoc.password);
     if (passOk) {
       jwt.sign(
-        { email: userDoc.email, id: userDoc._id },
+        { email: userDoc.email, id: userDoc._id, name: userDoc.name },
         jwtSecret,
         {},
         (err, token) => {

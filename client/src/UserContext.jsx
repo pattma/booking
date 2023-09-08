@@ -1,11 +1,17 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [ready, setReady] = useState(false);
+
+  // add propTypes
+  UserContextProvider.propTypes = {
+    children: PropTypes.any,
+  };
 
   useEffect(() => {
     if (!user) {
