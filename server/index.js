@@ -7,18 +7,18 @@ const User = require("./models/User.js");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const app = express();
-const port = 8080
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = "346rkgmvcbzhgcitudfhxgs3e5779";
+const { SERVER_PORT, SECRET_KEY } = process.env;
+const port = SERVER_PORT;
+const jwtSecret = SECRET_KEY;
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    // origin: 'http://127.0.0.1:5173',
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5173", // http://127.0.0.1:5173
   })
 );
 
@@ -85,5 +85,4 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
-// app.listen(4000);
-app.listen(port, () => console.log(`Server has started on port: ${port}`))
+app.listen(port, () => console.log(`Server has started on port: ${port}`));

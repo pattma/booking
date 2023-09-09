@@ -9,7 +9,7 @@ const LoginPage = () => {
   const [redirect, setRedirect] = useState(false);
   const { setUser } =  useContext(UserContext);
 
-  async function handleLoginSubmit(e) {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const data = await axios.post("/login", { email, password });
