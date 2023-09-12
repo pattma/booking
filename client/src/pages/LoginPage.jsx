@@ -7,22 +7,26 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const { setUser } =  useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    console.log("Email:", email);
+    console.log("Password:", password);
     try {
       const data = await axios.post("/login", { email, password });
-      setUser(data);
+      console.log("Received user data:", data); // Log the received user data
+      setUser(data); // Update user data in state
+      localStorage.setItem("user", JSON.stringify(data)); // Store user data in localStorage
       alert("Login successful");
       setRedirect(true);
     } catch (e) {
       alert("Login failed");
     }
-  }
+  };
 
   if (redirect) {
-    return <Navigate to={"/"} />
+    return <Navigate to={"/"} />;
   }
 
   return (
