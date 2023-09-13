@@ -48,11 +48,6 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-<<<<<<< HEAD
-=======
-  // console.log("Received email:", email);
-  // console.log("Received password:", password);
->>>>>>> a35cf1d9bbf6f7fe0e4cf4dc19968cd53198b7ba
   const userDoc = await User.findOne({ email });
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -103,10 +98,6 @@ app.post("/profile", async (req, res) => {
 // Add this line to debug WebSocket events in index.js
 io.on("connection", (socket) => {
   console.log("WebSocket connection established");
-<<<<<<< HEAD
-
-=======
->>>>>>> a35cf1d9bbf6f7fe0e4cf4dc19968cd53198b7ba
   socket.on("Header", (data) => {
     console.log("Received WebSocket event in index.js:", data);
   });
