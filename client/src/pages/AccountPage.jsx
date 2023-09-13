@@ -4,18 +4,16 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5173"); // Replace with your WebSocket server URL
+const socket = io("http://localhost:5173"); // Replace with WebSocket server URL
 
 const AccountPage = () => {
   const [redirect, setRedirect] = useState(null);
   const { ready, user, setUser } = useContext(UserContext);
-  console.log("User data in Header:", user); // Add this line
 
   const userName = user && user.data ? user.data.name : "";
   const userEmail = user && user.data ? user.data.email : "";
 
   let { subpage } = useParams();
-
   // Set subpage to "profile" if it's undefined
   if (subpage === undefined) {
     subpage = "profile";
@@ -46,7 +44,7 @@ const AccountPage = () => {
 
   // Add this line to debug WebSocket events in AccountPage.jsx
   socket.on("Header", (updatedData) => {
-    console.log("Received WebSocket event in AccountPage.jsx:", updatedData);
+    // console.log("Received WebSocket event in AccountPage.jsx:", updatedData);
     // Update user data in your context or state
     setUser(updatedData);
   });
@@ -85,10 +83,6 @@ const AccountPage = () => {
     return <Navigate to={redirect} />;
   }
 
-  // console.log("User data:", user); // Log user data
-  console.log("User data in AccountPage:", user);
-
-
   return (
     <div>
       <nav className="w-full flex justify-center mt-8 gap-2 mb-8">
@@ -104,9 +98,7 @@ const AccountPage = () => {
       </nav>
       {subpage === "profile" && (
         <div className="text-center max-w-lg mx-auto">
-          {/* Logged in as {user.name} ({user.email})<br /> */}
           Logged in as {userName} ({userEmail})<br />
-          {/* Logged in as {user && user.data ? user.data.name : ""} ({user && user.data ? user.data.email : ""})<br /> */}
           <button onClick={logout} className="primary max-w-sm mt-2">
             Logout
           </button>

@@ -13,15 +13,6 @@ export function UserContextProvider({ children }) {
     children: PropTypes.any,
   };
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     axios.get("/profile").then(({ data }) => {
-  //       setUser(data);
-  //       setReady(true);
-  //     });
-  //   }
-  // }, []);
-
   useEffect(() => {
     // Check if user data is in localStorage
     const storedUser = localStorage.getItem("user");

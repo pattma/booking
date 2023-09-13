@@ -20,11 +20,11 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173", // http://127.0.0.1:5173
+    origin: "http://localhost:5173",
   })
 );
 
-// connect to database
+// Connect to database
 mongoose.connect(process.env.MONGO_URL);
 
 app.get("/test", (req, res) => {
@@ -48,8 +48,6 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log("Received email:", email);
-  console.log("Received password:", password);
   const userDoc = await User.findOne({ email });
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -70,7 +68,6 @@ app.post("/login", async (req, res) => {
     res.json("not found");
   }
 });
-
 
 app.get("/profile", (req, res) => {
   const { token } = req.cookies;
@@ -103,13 +100,10 @@ app.post("/profile", async (req, res) => {
 // Add this line to debug WebSocket events in index.js
 io.on("connection", (socket) => {
   console.log("WebSocket connection established");
-  // ...other code
 
   socket.on("Header", (data) => {
     console.log("Received WebSocket event in index.js:", data);
   });
-
-  // ...other code
 });
 
 // To reset the cookie when logout
