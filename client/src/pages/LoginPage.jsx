@@ -11,11 +11,11 @@ const LoginPage = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
     try {
       const data = await axios.post("/login", { email, password });
-      console.log("Received user data:", data); // Log the received user data
+      // console.log("Received user data:", data); // Log the received user data
       setUser(data); // Update user data in state
       localStorage.setItem("user", JSON.stringify(data)); // Store user data in localStorage
       alert("Login successful");

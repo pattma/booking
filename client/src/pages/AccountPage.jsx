@@ -9,7 +9,7 @@ const socket = io("http://localhost:5173"); // Replace with your WebSocket serve
 const AccountPage = () => {
   const [redirect, setRedirect] = useState(null);
   const { ready, user, setUser } = useContext(UserContext);
-  console.log("User data in Header:", user); // Add this line
+  // console.log("User data in Header:", user); // Add this line
 
   const userName = user && user.data ? user.data.name : "";
   const userEmail = user && user.data ? user.data.email : "";
@@ -59,9 +59,7 @@ const AccountPage = () => {
     setUser(null);
     // Remove user data from localStorage
     localStorage.removeItem("user");
-
-    // Perform any other logout actions (e.g., clearing cookies)
-  }
+  };
 
   // Checking for account page
   if (ready && !user && !redirect) {
@@ -85,9 +83,7 @@ const AccountPage = () => {
     return <Navigate to={redirect} />;
   }
 
-  // console.log("User data:", user); // Log user data
-  console.log("User data in AccountPage:", user);
-
+  // console.log("User data in AccountPage:", user);
 
   return (
     <div>
@@ -104,9 +100,7 @@ const AccountPage = () => {
       </nav>
       {subpage === "profile" && (
         <div className="text-center max-w-lg mx-auto">
-          {/* Logged in as {user.name} ({user.email})<br /> */}
           Logged in as {userName} ({userEmail})<br />
-          {/* Logged in as {user && user.data ? user.data.name : ""} ({user && user.data ? user.data.email : ""})<br /> */}
           <button onClick={logout} className="primary max-w-sm mt-2">
             Logout
           </button>

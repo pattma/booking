@@ -4,7 +4,7 @@ import { UserContext } from "./UserContext";
 
 const Header = () => {
   const { user } = useContext(UserContext);
-  console.log("User data in Header:", user); // Add this line
+  // console.log("User data in Header:", user); // Add this line
 
   // Check if user.data exists before accessing its properties
   const userName = user && user.data ? user.data.name : "";
@@ -93,7 +93,6 @@ const Header = () => {
               />
             </svg>
           </div>
-          {/* {!!user && <div>{user.name}</div>} */}
           {!!userName && <div>{userName}</div>}
         </Link>
       </header>
