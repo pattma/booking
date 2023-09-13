@@ -4,16 +4,15 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5173"); // Replace with WebSocket server URL
+const socket = io(import.meta.env.SOCKET_SERVER_URL);
 
 const AccountPage = () => {
   const [redirect, setRedirect] = useState(null);
   const { ready, user, setUser } = useContext(UserContext);
-
   const userName = user && user.data ? user.data.name : "";
   const userEmail = user && user.data ? user.data.email : "";
-
   let { subpage } = useParams();
+
   // Set subpage to "profile" if it's undefined
   if (subpage === undefined) {
     subpage = "profile";
@@ -38,14 +37,7 @@ const AccountPage = () => {
 
   // Subscribe to WebSocket events for profile updates
   socket.on("Header", (updatedData) => {
-    // Update user data in your context or state
-    setUser(updatedData);
-  });
-
-  // Add this line to debug WebSocket events in AccountPage.jsx
-  socket.on("Header", (updatedData) => {
-    // console.log("Received WebSocket event in AccountPage.jsx:", updatedData);
-    // Update user data in your context or state
+    // Update user data in context or state
     setUser(updatedData);
   });
 
