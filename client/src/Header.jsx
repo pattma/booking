@@ -4,11 +4,6 @@ import { UserContext } from "./UserContext";
 
 const Header = () => {
   const { user } = useContext(UserContext);
-<<<<<<< HEAD
-=======
-  // console.log("User data in Header:", user); // Add this line
-
->>>>>>> a35cf1d9bbf6f7fe0e4cf4dc19968cd53198b7ba
   // Check if user.data exists before accessing its properties
   const userName = user && user.data ? user.data.name : "";
 

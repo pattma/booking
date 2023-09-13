@@ -9,10 +9,6 @@ const socket = io("http://localhost:5173"); // Replace with WebSocket server URL
 const AccountPage = () => {
   const [redirect, setRedirect] = useState(null);
   const { ready, user, setUser } = useContext(UserContext);
-<<<<<<< HEAD
-=======
-  // console.log("User data in Header:", user); // Add this line
->>>>>>> a35cf1d9bbf6f7fe0e4cf4dc19968cd53198b7ba
 
   const userName = user && user.data ? user.data.name : "";
   const userEmail = user && user.data ? user.data.email : "";
@@ -85,11 +81,6 @@ const AccountPage = () => {
     return <Navigate to={redirect} />;
   }
 
-<<<<<<< HEAD
-=======
-  // console.log("User data in AccountPage:", user);
-
->>>>>>> a35cf1d9bbf6f7fe0e4cf4dc19968cd53198b7ba
   return (
     <div>
       <nav className="w-full flex justify-center mt-8 gap-2 mb-8">
