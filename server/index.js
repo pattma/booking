@@ -7,6 +7,8 @@ const User = require("./models/User.js");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const app = express();
+const httpServer = require("http").createServer(app); // Create an HTTP server
+const io = require("socket.io")(httpServer); // Initialize Socket.io
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const { SERVER_PORT, SECRET_KEY } = process.env;
@@ -18,11 +20,11 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173", // http://127.0.0.1:5173
+    origin: "http://localhost:5173",
   })
 );
 
-// connect to database
+// Connect to database
 mongoose.connect(process.env.MONGO_URL);
 
 app.get("/test", (req, res) => {
@@ -46,6 +48,8 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  // console.log("Received email:", email);
+  // console.log("Received password:", password);
   const userDoc = await User.findOne({ email });
   if (userDoc) {
     const passOk = bcrypt.compareSync(password, userDoc.password);
@@ -78,6 +82,27 @@ app.get("/profile", (req, res) => {
   } else {
     res.json(null);
   }
+});
+
+// Add a route to emit a WebSocket event when a user's profile data changes
+app.post("/profile", async (req, res) => {
+  const { name, email, _id } = req.body; // Update user data
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    { name, email },
+    { new: true }
+  );
+  // Emit a WebSocket event with the updated user data
+  io.emit("Header", updatedUser);
+  res.json(updatedUser);
+});
+
+// Add this line to debug WebSocket events in index.js
+io.on("connection", (socket) => {
+  console.log("WebSocket connection established");
+  socket.on("Header", (data) => {
+    console.log("Received WebSocket event in index.js:", data);
+  });
 });
 
 // To reset the cookie when logout
