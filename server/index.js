@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./models/User.js");
 const cookieParser = require("cookie-parser");
-// const imageDownloader = require('image-downloader');
 const imageDownloader = require("image-downloader");
 require("dotenv").config();
 const app = express();
