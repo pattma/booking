@@ -111,7 +111,7 @@ const PlacePage = () => {
                 addedPhotos.map((link) => (
                   <div>
                     {link}
-                    {/* <img className="rounded-2xl" src={"http://127.0.0.1:8080/uploads/" + link} alt="" /> */}
+                    <img className="rounded-2xl" src={"http://127.0.0.1:8080/uploads/" + link} alt="" />
                   </div>
                 ))}
               <button className="flex gap-1 justify-center border bg-transparent rounded-2xl p-8 text-2xl text-gray-600">
