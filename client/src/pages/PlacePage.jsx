@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Perks from "../Perks";
 
+const API_URL = import.meta.env.API_BASE_URL;
+
 const PlacePage = () => {
   const { action } = useParams();
   const [title, setTitle] = useState("");
@@ -109,11 +111,11 @@ const PlacePage = () => {
             <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {addedPhotos.length > 0 &&
                 addedPhotos.map((link) => (
-                  <div>
-                    {link}
-                    <img className="rounded-2xl" src={"http://127.0.0.1:8080/uploads/" + link} alt="" />
+                  <div key={link}>
+                    <img className="rounded-2xl" src={`${API_URL}/uploads/` + link} alt="" />
                   </div>
-                ))}
+                ))
+              }
               <button className="flex gap-1 justify-center border bg-transparent rounded-2xl p-8 text-2xl text-gray-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
