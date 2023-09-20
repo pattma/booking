@@ -113,11 +113,16 @@ app.post("/logout", (req, res) => {
 app.post("/upload-by-link", async (req, res) => {
   const { link } = req.body;
   const newName = "photo" + Date.now() + ".jpg";
-  await imageDownloader.image({
-    url: link,
-    dest: __dirname + "/uploads",
-  });
-  res.json(newName);
+  try {
+    await imageDownloader.image({
+      url: link,
+      dest: __dirname + "/uploads/" + newName,
+    });
+    res.json(newName);
+  } catch (error) {
+    // Handle any errors that may occur during the image download
+    res.status(500).json({ error: "Failed to download image" });
+  }
 });
 
 app.listen(port, () => console.log(`Server has started on port: ${port}`));
