@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Perks from "../Perks";
 
-const API_URL = import.meta.env.API_BASE_URL;
+const SERVER_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
 const PlacePage = () => {
   const { action } = useParams();
@@ -33,13 +33,18 @@ const PlacePage = () => {
   };
   const addPhotoByLink = async (e) => {
     e.preventDefault();
-    const { data: filename } = await axios.post("/upload-by-link", {
-      link: photoLink,
-    });
-    setAddedPhotos((prev) => {
-      return [...prev, filename];
-    });
-    setPhotoLink("");
+    try {
+      const { data: filename } = await axios.post("/upload-by-link", {
+        link: photoLink,
+      });
+      setAddedPhotos((prev) => {
+        const updatedPhotos = [...prev, filename];
+        return updatedPhotos;
+      });
+      setPhotoLink("");
+    } catch (error) {
+      console.error("Error adding photo:", error);
+    }
   };
 
   return (
@@ -82,7 +87,6 @@ const PlacePage = () => {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="title, for example: My lovely apartment"
             />
-
             {/* Address */}
             {preInput("Address", "Address to this place")}
             <input
@@ -91,7 +95,6 @@ const PlacePage = () => {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="address"
             />
-
             {/* Photos */}
             {preInput("Photos", "more = better")}
             <div className="flex gap-2">
@@ -108,15 +111,15 @@ const PlacePage = () => {
                 Add&nbsp;photo
               </button>
             </div>
-            <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <div className="mt-2 grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {addedPhotos.length > 0 &&
                 addedPhotos.map((link) => (
                   <div key={link}>
-                    <img className="rounded-2xl" src={`${API_URL}/uploads/` + link} alt="" />
+                    <img className="rounded-2xl" src={`${SERVER_URL}/uploads/` + link} alt="" />
                   </div>
                 ))
               }
-              <button className="flex gap-1 justify-center border bg-transparent rounded-2xl p-8 text-2xl text-gray-600">
+              <button className="flex items-center gap-1 justify-center border bg-transparent rounded-2xl p-2 text-2xl text-gray-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -134,26 +137,24 @@ const PlacePage = () => {
                 Upload
               </button>
             </div>
-
             {/* Description */}
             {preInput("Description", "description of the place")}
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-
             {/* Perks */}
             {preInput("Perks", "select all the perks of your place")}
             <div className="grid mt-2 gap-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
               <Perks selected={perks} onChange={setPerks} />
             </div>
-
             {/* Extra info */}
             {preInput("Extra info", "house rules, etc")}
             <textarea
               value={extraInfo}
               onChange={(e) => setExtraInfo(e.target.value)}
             />
+            {/* Check in & out */}
             {preInput(
               "Check in&out times",
               "add check in and out times, remember to have some time window for cleaning the room between guests"
