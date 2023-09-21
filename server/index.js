@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/User.js");
 const cookieParser = require("cookie-parser");
 const imageDownloader = require("image-downloader");
+const multer = require("multer");
+const fs = require("fs");
 require("dotenv").config();
 const app = express();
 const httpServer = require("http").createServer(app); // Create an HTTP server
@@ -123,6 +125,20 @@ app.post("/upload-by-link", async (req, res) => {
     // Handle any errors that may occur during the image download
     res.status(500).json({ error: "Failed to download image" });
   }
+});
+
+const photoMiddleware = multer({ dest: "uploads/" });
+app.post("/upload", photoMiddleware.array("photos", 100), (req, res) => {
+  const uploadedFiles = [];
+  for (let i = 0; i < req.files.length; i++) {
+    const { path, originalname } = req.files[i];
+    const parts = originalname.split("."); // first part: photo's file name
+    const ext = parts[parts.length - 1]; // second/last part: photo's file type
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath);
+    uploadedFiles.push(newPath.replace("uploads\\", ""));
+  }
+  res.json(uploadedFiles);
 });
 
 app.listen(port, () => console.log(`Server has started on port: ${port}`));
