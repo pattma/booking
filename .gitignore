@@ -2,7 +2,7 @@
 .env
 
 # Ignore the "uploads" folder in the server directory
-/server/uploads/
+server/uploads/*
 
 # Logs
 logs
