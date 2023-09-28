@@ -153,7 +153,7 @@ app.post("/places", (req, res) => {
     extraInfo,
     checkIn,
     checkOut,
-    maxGuest,
+    maxGuests,
   } = req.body;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
@@ -167,7 +167,7 @@ app.post("/places", (req, res) => {
       extraInfo,
       checkIn,
       checkOut,
-      maxGuest,
+      maxGuests,
     });
     res.json(placeDoc);
   });
