@@ -3,6 +3,8 @@ import AccountNav from "../AccountNav";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const SERVER_URL = `${import.meta.env.VITE_API_BASE_URL}`;
+
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
 
@@ -40,10 +42,18 @@ const PlacesPage = () => {
       <div className="mt-4">
         {places.length > 0 &&
           places.map((place) => (
-            <Link to={'/account/places/' + place._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl" key={place}>
-              <div className="w-32 h-32 bg-gray-300 grow shrink-0">
+            <Link
+              to={"/account/places/" + place._id}
+              className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl"
+              key={place}
+            >
+              <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
                 {place.photos.length > 0 && (
-                  <img src={place.photos[0]} alt="" />
+                  <img
+                    className="object-cover"
+                    src={`${SERVER_URL}/uploads/` + place.photos[0]}
+                    alt=""
+                  />
                 )}
               </div>
               <div className="grow-0 shrink">
