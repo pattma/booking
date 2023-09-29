@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import IndexPage from "./pages/indexPage";
+import IndexPage from "./pages/IndexPage";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./Layout";
 import RegisterPage from "./pages/RegisterPage";
@@ -9,6 +9,7 @@ import { UserContextProvider } from "./UserContext";
 import ProfilePage from "./pages/ProfilePage";
 import PlacesPage from "./pages/PlacesPage";
 import PlacesFormPage from "./pages/PlacesFormPage";
+import PlacePage from "./pages/PlacePage";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 axios.defaults.withCredentials = true;
@@ -25,6 +26,7 @@ function App() {
           <Route path="/account/places" element={<PlacesPage />} />
           <Route path="/account/places/new" element={<PlacesFormPage />} />
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
+          <Route path="/place/:id" element={<PlacePage />} />
         </Route>
       </Routes>
     </UserContextProvider>

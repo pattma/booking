@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const SERVER_URL = `${import.meta.env.VITE_API_BASE_URL}`;
 
@@ -14,7 +15,7 @@ const IndexPage = () => {
     <div className="mt-4 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {places.length > 0 &&
         places.map((place) => (
-          <div key={place}>
+          <Link to={"/place/" + place._id} key={place}>
             <div className="bg-gray-500 mb-2 rounded-2xl flex">
               {place.photos?.[0] && (
                 <img
@@ -29,7 +30,7 @@ const IndexPage = () => {
             <div className="mt-1">
               <span className="font-bold">${place.price}</span> per night
             </div>
-          </div>
+          </Link>
         ))}
     </div>
   );
