@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 import AccountNav from "../AccountNav";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-const SERVER_URL = `${import.meta.env.VITE_API_BASE_URL}`;
+import PlaceImg from "../PlaceImg";
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
@@ -48,13 +47,7 @@ const PlacesPage = () => {
               key={place}
             >
               <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
-                {place.photos.length > 0 && (
-                  <img
-                    className="object-cover"
-                    src={`${SERVER_URL}/uploads/` + place.photos[0]}
-                    alt=""
-                  />
-                )}
+                <PlaceImg place={place} />
               </div>
               <div className="grow-0 shrink">
                 <h2 className="text-xl">{place.title}</h2>
